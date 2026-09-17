@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Tracker</title> 
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Exam Tracker</h1>
+        </div>
+
+        <div class="nav-bar">
+            <div class="nav-item">Total - <span id="exams-filled">0</span></div>
+            <div class="nav-item">Attempted - <span id="attempted-exams">0</span></div>
+            <div class="nav-item">Cleared - <span id="cleared-exams">0</span></div>
+            <div class="nav-item">Not Cleared - <span id="not-cleared">0</span></div>
+            <div class="nav-item">Missed - <span id="missed-exams">0</span></div>
+            <div class="nav-item">This Month - <span id="exam-month">0</span></div>
+        </div>
+
+        <div class="datetime-display" id="datetime">
+            Loading...
+        </div>
+
+        <div class="main-content">
+            <div class="left-panel">
+                <h2>📋 My Exams</h2>
+                <div class="no-exams-message" id="no-exams-message">No exams added yet. Add your first exam!</div>
+                <div class="exam-cards-container" id="exam-cards">
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <h2>➕ Add New Exam</h2>
+                <form id="exam-form">
+                    <div class="form-group">
+                        <label for="exam-name">Exam Name *</label>
+                        <input type="text" id="exam-name" required placeholder="Enter exam name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exam-date">Exam Date *</label>
+                        <input type="date" id="exam-date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="test-procedure">Test Procedure & Syllabus *</label>
+                        <textarea id="test-procedure" required placeholder="Describe test procedure and syllabus"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="more-details">Additional Details</label>
+                        <textarea id="more-details" placeholder="Any additional information"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exam-links">Relevant Links</label>
+                        <textarea id="exam-links" placeholder="Paste relevant URLs here"></textarea>
+                    </div>
+
+                    <button type="submit" class="add-btn">Add Exam</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="exam-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+
+            <!-- View Mode -->
+            <div class="view-mode" id="view-mode">
+                <h2 id="modal-exam-name">Exam Name</h2>
+
+                <div class="detail-item">
+                    <span class="detail-label">📅 Exam Date:</span>
+                    <div class="detail-value" id="modal-exam-date"></div>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">⏳ Time Remaining:</span>
+                    <div class="detail-value" id="modal-days-left"></div>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">📊 Exam Status:</span>
+                    <select class="status-select" id="modal-exam-status" onchange="saveStatus()">
+                        <option value="upcoming">Upcoming</option>
+                        <option value="cleared">Cleared (Passed)</option>
+                        <option value="not-cleared">Not Cleared (Failed)</option>
+                        <option value="missed">Missed (Didn't Attend)</option>
+                    </select>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">📝 Test Procedure & Syllabus:</span>
+                    <div class="detail-value" id="modal-test-procedure"></div>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">📌 Additional Details:</span>
+                    <div class="detail-value" id="modal-more-details"></div>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">🔗 Links:</span>
+                    <div class="detail-value" id="modal-links"></div>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="edit-btn" onclick="enableEditMode()">✏️ Edit Details</button>
+                    <button class="delete-btn" onclick="deleteExam()">🗑️ Delete</button>
+                </div>
+            </div>
+
+            <!-- Edit Mode -->
+            <div class="edit-mode" id="edit-mode">
+                <h2>Edit Exam Details</h2>
+
+                <div class="edit-form-group">
+                    <label for="edit-exam-name">Exam Name *</label>
+                    <input type="text" id="edit-exam-name" required>
+                </div>
+
+                <div class="edit-form-group">
+                    <label for="edit-exam-date">Exam Date *</label>
+                    <input type="date" id="edit-exam-date" required>
+                </div>
+
+                <div class="edit-form-group">
+                    <label for="edit-test-procedure">Test Procedure & Syllabus *</label>
+                    <textarea id="edit-test-procedure" required></textarea>
+                </div>
+
+                <div class="edit-form-group">
+                    <label for="edit-more-details">Additional Details</label>
+                    <textarea id="edit-more-details"></textarea>
+                </div>
+
+                <div class="edit-form-group">
+                    <label for="edit-exam-links">Relevant Links</label>
+                    <textarea id="edit-exam-links"></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="save-btn" onclick="saveEditedExam()">💾 Save Changes</button>
+                    <button class="cancel-btn" onclick="cancelEditMode()">✕ Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
